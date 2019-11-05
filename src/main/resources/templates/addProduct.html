@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bookstore</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<h1>Lisää uusi tuote</h1>
+
+	
+		<form th:object="${product}" th:action="@{save}" action="#" method="post">
+			<div class="form-group">
+			<label for="name">Tuotteen nimi</label>
+			<input type ="text" placeholder="Lisää nimi"  class="form-control" id="name" th:field="*{name}" /> 
+			</div>
+			<div class="form-group">
+			<label for="quantity">Määrä</label>
+			<input type ="text" class="form-control" id="quantity" th:field="*{quantity}" />
+			</div>
+			<div class="form-group">
+			<label for="categories">Kategoria</label>
+			 <select class="form-control" id="categories" th:field="*{category}">
+       			<option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+    		</select>
+    		</div>
+    		<div class="form-group">
+			<label for="date">Pakastettu</label>
+			<input type ="date" class="form-control" id="date" th:field="*{date}" />
+			</div>
+			<div class="form-group">
+			<label for="lastdate">Viimeinen käyttöpvm</label>
+			<input type ="date" class="form-control" id="lastdate" th:field="*{lastdate}" />
+			</div>
+			<p><input type ="submit" value="Lisää"></p>
+			
+		</form>
+	</div>
+
+</body>
+</html>

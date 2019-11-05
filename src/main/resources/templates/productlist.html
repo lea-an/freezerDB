@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>My Freezer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+	<h1>Pakastimen sisältö</h1>	
+	<h3 th:inline="text">Tervetuloa [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+	<div class="container">
+	<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>TUOTE</th>
+			<th>MÄÄRÄ</th>
+			<th>KATEGORIA</th>
+			<th>PAKASTETTU</th>
+			<th>VIIMEINEN KÄYTTÖPVM </th>
+			<th sec:authorize="hasRole('ADMIN')">POISTA</th>
+			<th sec:authorize="hasRole('ADMIN')">MUOKKAA</th>
+		</tr>
+	</thead>
+    <tbody>
+		<tr th:each="product : ${products}">
+			<th th:text="${product.name}"></th>
+			<th th:text="${product.quantity}"></th>
+			<th th:text="${product.category.name}"></th>
+			<th th:text="${product.date}"></th>
+			<th th:text="${product.lastdate}"></th>
+			<th sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${product.id})}">Poista</a></th>
+			<th sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${product.id})}">Muokkaa</a></th>
+		</tr>
+		</tbody>
+	</table>
+  	<a th:href="@{/add}">Lisää tuote</a>
+  		<br>
+	<a th:href="@{/files}">Lisää tiedosto</a>
+		<br>
+		<br>
+  	<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div> 
+</body>
+</html>
